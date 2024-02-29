@@ -7,8 +7,7 @@ function EditEvent({ event }) {
     <div>
       <Modal>
         <Modal.Open opens="event-form">
-          {/* TODO: onClick, the event is editable */}
-          <button className="absolute right-1 top-1">
+          <button className="absolute right-3 top-3 md:relative md:right-0 md:top-0 md:items-center">
             <HiPencil />
           </button>
         </Modal.Open>

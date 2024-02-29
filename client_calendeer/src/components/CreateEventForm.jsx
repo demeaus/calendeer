@@ -4,11 +4,13 @@ import Form from "../ui/Form";
 import { useState } from "react";
 import CreateInviteesList from "./CreateInviteesList";
 
+// TODO: Handle the datetime inputs displaying in UTC
 function CreateEventForm({ event = {} }) {
   let defaultValues = {};
 
   // Formats datetime objects into string that input datetime-locale can read as a default value
-  if (event) {
+  if (event.eventName) {
+    console.log(event);
     const datetime_start_str = event.datetime_start.toJSON().slice(0, -8);
     const datetime_end_str = event.datetime_end.toJSON().slice(0, -8);
 
