@@ -73,10 +73,10 @@ function Day() {
 
   return (
     <div className="flex h-screen p-2">
-      <div className="grid-rows-24 grid">
+      {/* <div className="grid-rows-24 grid">
         <p className="row-start-1">{beginHour}:00</p>
         <p className="row-start-24">{endHour}:00</p>
-      </div>
+      </div> */}
       <div className="grid-rows-24 grid">
         {eventData.sort(sortByDate).map((event) => (
           <Event key={event.id} event={event} />

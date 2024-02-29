@@ -1,3 +1,4 @@
+import AddEvent from "../components/AddEvent";
 import Day from "../components/Day";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -7,6 +8,7 @@ function AppLayout() {
     <div className="min-h-screen bg-stone-200">
       <Header />
       <Day />
+      <AddEvent />
       <Footer />
     </div>
   );

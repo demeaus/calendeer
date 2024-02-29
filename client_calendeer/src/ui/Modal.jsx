@@ -33,7 +33,7 @@ function Window({ children, name }) {
 
   return createPortal(
     <div className="fixed left-0 top-0 z-50 flex h-screen w-full items-center justify-center backdrop-blur-sm">
-      <div ref={ref} className="relative rounded-lg bg-stone-300 p-5">
+      <div ref={ref} className="w-100% relative rounded-lg bg-stone-300 p-5">
         <button onClick={close} className="absolute right-2 top-2 ">
           <HiX />
         </button>

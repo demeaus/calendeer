@@ -1,10 +1,18 @@
 import { useForm } from "react-hook-form";
 import { FormRow } from "../ui/FormRow";
 import Form from "../ui/Form";
+import { useState } from "react";
+import CreateInviteesList from "./CreateInviteesList";
 
 function CreateEventForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+
+  const [invitees, setInvitees] = useState([
+    "a@g.com",
+    "b@g.com",
+    "cfdsfdsafdasaffdsadf@g.com",
+  ]);
 
   return (
     <Form>
@@ -43,6 +51,17 @@ function CreateEventForm() {
           className="input"
         />
       </FormRow>
+      {console.log(invitees)}
+      <FormRow label="Invitees">
+        {/* Add email addresses with validation. On submit, send array of invitees as represented by chips. */}
+        <input
+          id="invitees"
+          type="hidden"
+          value={invitees}
+          {...register("invitees")}
+        />
+      </FormRow>
+      <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
     </Form>
   );
 }
