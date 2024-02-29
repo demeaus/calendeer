@@ -4,15 +4,27 @@ import Form from "../ui/Form";
 import { useState } from "react";
 import CreateInviteesList from "./CreateInviteesList";
 
-function CreateEventForm() {
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+function CreateEventForm({ event = {} }) {
+  let defaultValues = {};
+
+  // Formats datetime objects into string that input datetime-locale can read as a default value
+  if (event) {
+    const datetime_start_str = event.datetime_start.toJSON().slice(0, -8);
+    const datetime_end_str = event.datetime_end.toJSON().slice(0, -8);
+
+    defaultValues = {
+      ...event,
+      datetime_start: datetime_start_str,
+      datetime_end: datetime_end_str,
+    };
+  }
+
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: defaultValues,
+  });
   const { errors } = formState;
 
-  const [invitees, setInvitees] = useState([
-    "a@g.com",
-    "b@g.com",
-    "cfdsfdsafdasaffdsadf@g.com",
-  ]);
+  const [invitees, setInvitees] = useState(event?.invitees || []);
 
   return (
     <Form>
@@ -35,23 +47,22 @@ function CreateEventForm() {
       {/* TODO: Host should be disabled; use logged in user */}
 
       {/* TODO: Validate datetimes: end is after start */}
-      <FormRow label="Start" error={errors?.start?.message}>
+      <FormRow label="Start" error={errors?.datetime_start?.message}>
         <input
-          id="start"
-          type="datetime"
-          {...register("start")}
+          id="datetime_start"
+          type="datetime-local"
+          {...register("datetime_start")}
           className="input"
         />
       </FormRow>
-      <FormRow label="End" error={errors?.end?.message}>
+      <FormRow label="End" error={errors?.datetime_end?.message}>
         <input
-          id="end"
-          type="datetime"
-          {...register("end")}
+          id="datetime_end"
+          type="datetime-local"
+          {...register("datetime_end")}
           className="input"
         />
       </FormRow>
-      {console.log(invitees)}
       <FormRow label="Invitees">
         {/* Add email addresses with validation. On submit, send array of invitees as represented by chips. */}
         <input
