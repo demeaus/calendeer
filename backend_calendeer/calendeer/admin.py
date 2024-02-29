@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Event, EventsAttendees
+from .models import Event, EventsInvitees
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'host', 'datetime_start', 'datetime_end')
+    list_display = ('eventName', 'description', 'host', 'datetime_start', 'datetime_end')
 
-class EventsAttendeesAdmin(admin.ModelAdmin):
-    list_display = ('event', 'attendee')
+class EventsInviteesAdmin(admin.ModelAdmin):
+    list_display = ('event', 'invitee')
 
 admin.site.register(Event, EventAdmin)
-admin.site.register(EventsAttendees, EventsAttendeesAdmin)
+admin.site.register(EventsInvitees, EventsInviteesAdmin)
