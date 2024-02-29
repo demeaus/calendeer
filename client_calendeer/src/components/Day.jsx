@@ -1,7 +1,8 @@
+import { useEvents } from "../hooks/useEvents";
 import Event from "./Event";
 
 // Event Data for the next 24 hours
-const eventData = [
+const tempEventData = [
   {
     id: 1,
     eventName: "Meeting A",
@@ -77,6 +78,8 @@ const eventData = [
 ];
 
 function Day() {
+  const { isLoading, events = null, error } = useEvents();
+
   const now = new Date();
   const beginHour = now.getHours();
   const endHour = (beginHour + 24) % 14;
@@ -94,11 +97,10 @@ function Day() {
         <p className="row-start-24">{endHour}:00</p>
       </div> */}
       {/* <div className="grid-rows-24 grid"> */}
-      <div className="">
-        {eventData.sort(sortByDate).map((event) => (
-          <Event key={event.id} event={event} />
-        ))}
-      </div>
+      {events &&
+        events
+          .sort(sortByDate)
+          .map((event) => <Event key={event.id} event={event} />)}
     </div>
   );
 }

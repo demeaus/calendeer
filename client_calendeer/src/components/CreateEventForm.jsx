@@ -3,16 +3,17 @@ import { FormRow } from "../ui/FormRow";
 import Form from "../ui/Form";
 import { useState } from "react";
 import CreateInviteesList from "./CreateInviteesList";
+import Button from "../ui/Button";
 
 // TODO: Handle the datetime inputs displaying in UTC
 function CreateEventForm({ event = {} }) {
   let defaultValues = {};
 
-  // Formats datetime objects into string that input datetime-locale can read as a default value
+  // Formats datetime string into format datetime-locale can read as a default value
   if (event.eventName) {
-    console.log(event);
-    const datetime_start_str = event.datetime_start.toJSON().slice(0, -8);
-    const datetime_end_str = event.datetime_end.toJSON().slice(0, -8);
+    console.log(event.datetime_start);
+    const datetime_start_str = event.datetime_start.slice(0, -4);
+    const datetime_end_str = event.datetime_end.slice(0, -4);
 
     defaultValues = {
       ...event,
@@ -75,6 +76,10 @@ function CreateEventForm({ event = {} }) {
         />
       </FormRow>
       <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
+      <div className="flex justify-between">
+        <Button type="primary">Save</Button>
+        <Button type="secondary">Delete</Button>
+      </div>
     </Form>
   );
 }
