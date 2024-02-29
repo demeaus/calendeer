@@ -25,3 +25,11 @@ dist-ssr
 
 .DS_Store
 .venv
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+media
+db.sqlite3
