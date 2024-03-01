@@ -76,8 +76,6 @@ const tempEventData = [
     invitees: ["x@g.com", "cfdsfdsafdasaffdsadf@g.com"],
   },
 ];
-// TODO: Query to get invitees
-// TODO: Then you can edit and add events
 
 function Day() {
   const { isLoading, events = null, error } = useEvents();
@@ -93,12 +91,7 @@ function Day() {
   }
 
   return (
-    <div className="w-100% flex h-screen justify-center p-2 ">
-      {/* <div className="grid-rows-24 grid">
-        <p className="row-start-1">{beginHour}:00</p>
-        <p className="row-start-24">{endHour}:00</p>
-      </div> */}
-      {/* <div className="grid-rows-24 grid"> */}
+    <div className="w-100% flex h-screen flex-col p-2 ">
       {events &&
         events
           .sort(sortByDate)

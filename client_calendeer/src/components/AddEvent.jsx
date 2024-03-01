@@ -1,5 +1,5 @@
 import { HiPlus } from "react-icons/hi";
-import CreateEventForm from "./CreateEventForm";
+import EventForm from "./EventForm";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 
@@ -13,7 +13,7 @@ function AddEvent() {
           </Button>
         </Modal.Open>
         <Modal.Window name="event-form">
-          <CreateEventForm />
+          <EventForm />
         </Modal.Window>
       </Modal>
     </div>

@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import AppLayout from "./ui/AppLayout";
+import Main from "./ui/Main";
 import AddEvent from "./components/AddEvent";
 import Day from "./components/Day";
 import Footer from "./ui/Footer";
@@ -19,12 +19,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AppLayout>
-          <Header />
+        <Header />
+        <Main>
           <Day />
           <AddEvent />
-          <Footer />
-        </AppLayout>
+        </Main>
+        <Footer />
         <ReactQueryDevtools initialIsOpen={false} />
       </AuthProvider>
     </QueryClientProvider>

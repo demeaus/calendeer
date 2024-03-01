@@ -8,6 +8,10 @@ class Event(models.Model):
     datetime_start = models.DateTimeField()
     datetime_end = models.DateTimeField()
 
+    def get_invitees(self):
+        invitees = EventsInvitees.objects.filter(event=self.id).values_list('invitee__email', flat=True)
+        return invitees
+
     def __str__(self):
         return self.eventName + " (" + str(self.pk) + ")"
     
@@ -16,7 +20,12 @@ class EventsInvitees(models.Model):
     invitee = models.ForeignKey(User, on_delete=models.DO_NOTHING) 
     event = models.ForeignKey(Event, on_delete=models.DO_NOTHING)
 
+
+# Custom User methods
 def get_user_email(self):
     return self.email
 
-User.add_to_class("__str__", get_user_email)
+def get_user_str(self):
+    return get_user_email(self) + " (" + str(self.pk) + ")"
+
+User.add_to_class("__str__", get_user_str)

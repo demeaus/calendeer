@@ -1,17 +1,19 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import Chip from "../ui/Chip";
+import { FormRow } from "../ui/FormRow";
 
 /**
  * Allows user to invite others to their event by adding emails
  */
-// TODO: Refactor as a FormRow
+// TODO: Refactor into seperate Form and List
 function CreateInviteesList({ invitees, setInvitees }) {
   const [newInvitee, setNewInvitee] = useState("");
 
-  // Add invitee to list of invitees
+  // Add invitee to list of invitees when invite button is clicked
   function handleInvite(e) {
     e.preventDefault();
+
     setInvitees((invitees) => [...invitees, newInvitee]);
     setNewInvitee("");
   }
@@ -23,26 +25,30 @@ function CreateInviteesList({ invitees, setInvitees }) {
 
   return (
     <div>
+      {/* Field for user to add invitees by email address */}
+      <form onSubmit={handleInvite} className="flex justify-center gap-2">
+        <FormRow label="Invitees">
+          <input
+            id="invitee"
+            type="email"
+            className="input"
+            placeholder="Type addresses to invite"
+            size="30"
+            onChange={(e) => setNewInvitee(e.target.value)}
+            value={newInvitee}
+            required
+          />
+        </FormRow>
+        <Button type="small">Invite</Button>
+      </form>
       {/* TODO: wrap email addresses */}
       <div className="my-2 flex items-center justify-between">
-        <p>Invitees </p>
+        {/* List of current invitees as chips */}
         <div className="flex justify-end gap-1">
           {invitees.map((invitee) => (
             <Chip key={invitee} email={invitee} onClick={handleChipClick} />
           ))}
         </div>
-      </div>
-      <div className="flex justify-between">
-        <input
-          type="text"
-          className="input"
-          placeholder="Type addresses to invite"
-          onChange={(e) => setNewInvitee(e.target.value)}
-          value={newInvitee}
-        />
-        <Button type="small" onClick={handleInvite}>
-          Invite
-        </Button>
       </div>
     </div>
   );

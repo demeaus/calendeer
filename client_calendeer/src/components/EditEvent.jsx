@@ -1,6 +1,6 @@
 import { HiPencil } from "react-icons/hi";
 import Modal from "../ui/Modal";
-import CreateEventForm from "./CreateEventForm";
+import EventForm from "./EventForm";
 
 function EditEvent({ event }) {
   return (
@@ -12,7 +12,7 @@ function EditEvent({ event }) {
           </button>
         </Modal.Open>
         <Modal.Window name="event-form">
-          <CreateEventForm event={event} />
+          <EventForm event={event} />
         </Modal.Window>
       </Modal>
     </div>
