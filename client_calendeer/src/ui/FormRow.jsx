@@ -1,11 +1,13 @@
 export function FormRow({ children, label, error }) {
   return (
-    <div className="grid items-center">
-      <label className="text-sm" htmlFor={children.props.id}>
+    <div className="flex items-center justify-end gap-3 px-2 py-1 text-sm font-medium">
+      <label className="" htmlFor={children.props.id}>
         {label}
       </label>
-      {children}
-      <span>{error}</span>
+      <div>
+        {children}
+        <span>{error}</span>
+      </div>
     </div>
   );
 }

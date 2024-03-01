@@ -10,7 +10,7 @@ const tempEventData = [
     description: "",
     datetime_start: new Date(2024, 2, 11, 12, 0),
     datetime_end: new Date(2024, 2, 11, 12, 30),
-    invitees: ["b@g.com", "cfdsfdsafdasaffdsadf@g.com"],
+    invitees: ["b@g.com", "deerdra@g.com"],
   },
   {
     id: 2,
@@ -76,6 +76,8 @@ const tempEventData = [
     invitees: ["x@g.com", "cfdsfdsafdasaffdsadf@g.com"],
   },
 ];
+// TODO: Query to get invitees
+// TODO: Then you can edit and add events
 
 function Day() {
   const { isLoading, events = null, error } = useEvents();
@@ -100,7 +102,9 @@ function Day() {
       {events &&
         events
           .sort(sortByDate)
-          .map((event) => <Event key={event.id} event={event} />)}
+          .map((event) => (
+            <Event key={`${event.id}-${event.eventName}`} event={event} />
+          ))}
     </div>
   );
 }

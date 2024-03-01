@@ -11,9 +11,11 @@ class EventView(APIView):
 
     # Get all events for a user where they are either a host or an invitee
     def get(self, request, user_id):
-        print(user_id)
         user = User.objects.get(id=user_id)
+
+        # Add invitees for each event to event data
         queryset = Event.objects.filter(Q(host=user) | Q(eventsinvitees__invitee=user)).distinct()
+
         serializer = EventSerializer(queryset, many=True)
         return Response(serializer.data)
 

@@ -11,7 +11,7 @@ function CreateEventForm({ event = {} }) {
 
   // Formats datetime string into format datetime-locale can read as a default value
   if (event.eventName) {
-    console.log(event.datetime_start);
+    console.log(event.invitees);
     const datetime_start_str = event.datetime_start.slice(0, -4);
     const datetime_end_str = event.datetime_end.slice(0, -4);
 
@@ -31,6 +31,9 @@ function CreateEventForm({ event = {} }) {
 
   return (
     <Form>
+      <h1 className="text-center text-lg font-bold">
+        {event?.eventName ? "Edit " : "Add "}Event
+      </h1>
       <FormRow label="Event Name" error={errors?.eventName?.message}>
         <input
           id="eventName"
@@ -66,7 +69,7 @@ function CreateEventForm({ event = {} }) {
           className="input"
         />
       </FormRow>
-      <FormRow label="Invitees">
+      <div>
         {/* Add email addresses with validation. On submit, send array of invitees as represented by chips. */}
         <input
           id="invitees"
@@ -74,8 +77,8 @@ function CreateEventForm({ event = {} }) {
           value={invitees}
           {...register("invitees")}
         />
-      </FormRow>
-      <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
+        <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
+      </div>
       <div className="flex justify-between">
         <Button type="primary">Save</Button>
         <Button type="secondary">Delete</Button>

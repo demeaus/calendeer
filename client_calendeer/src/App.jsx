@@ -9,7 +9,6 @@ import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    // Refreshes at least every 60s
     queries: {
       staleTime: 60 * 1000,
     },

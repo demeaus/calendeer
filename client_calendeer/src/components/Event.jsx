@@ -16,7 +16,7 @@ function Event({ event }) {
   const { date: end_date, time: end_time } = formatDate(datetime_end);
 
   return (
-    <div className="relative h-fit rounded-md border-2 bg-sky-700 px-4 py-2 text-stone-100 md:flex md:items-center md:justify-between md:gap-2">
+    <div className="relative h-fit rounded-md border-2 bg-blue-700 px-4 py-2 text-stone-100 md:flex md:items-center md:justify-between md:gap-2">
       <h1 className="">{eventName}</h1>
       <h2 className="text-sm">
         {start_time} to {end_time}
