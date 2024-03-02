@@ -27,7 +27,7 @@ def add_invitees(invitees, event_id):
             print("Error: ", e)
 
         # Check if user was invited to event already
-        invitee_was_invited = EventsInvitees.objects.filter(event__id=event_id, invitee__email=invitee).exists()
+        invitee_was_invited = EventsInvitees.objects.filter(event__pk=event_id, invitee__email=invitee).exists()
 
         # Invite the user to the meeting if they were not invited
         if not invitee_was_invited:
@@ -42,8 +42,8 @@ def remove_invitees(invitees, event_id):
         except User.DoesNotExist as e:
             print("Error: ", e)
 
-        invitee_was_invited = EventsInvitees.objects.filter(event__id=event_id, invitee__email=invitee).exists()
+        invitee_was_invited = EventsInvitees.objects.filter(event__pk=event_id, invitee__email=invitee).exists()
 
         # Remove user from event if they were invited
         if invitee_was_invited:
-            EventsInvitees.objects.filter(event__id=event_id, invitee__email=invitee).delete()
+            EventsInvitees.objects.filter(event__pk=event_id, invitee__email=invitee).delete()

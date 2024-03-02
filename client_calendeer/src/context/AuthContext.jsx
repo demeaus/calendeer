@@ -6,8 +6,8 @@ import { createContext, useContext } from "react";
  */
 
 const TEMP_USER = {
-  id: 5,
-  email: "a@g.com",
+  id: 2,
+  email: "deerdra@g.com",
 };
 
 const AuthContext = createContext();

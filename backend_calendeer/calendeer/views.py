@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Q
 from django.contrib.auth.models import User
-from .models import Event
+from .models import Event, EventsInvitees
 from .serializers import EventSerializer
 from . import helper
 
@@ -11,6 +11,7 @@ class EventView(APIView):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
 
+    # Get events
     def get(self, request, user_id):
         user = User.objects.get(id=user_id)
 
@@ -20,10 +21,9 @@ class EventView(APIView):
         serializer = EventSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    # Update event that the user is a host of
+    # Update events
     def put(self, request, user_id):
         if request.data:
-            print('request.data: ', request.data)
             event_id = request.data.get('id')
 
             # TODO: Fix serializer incompatibility with invitee list
@@ -72,7 +72,7 @@ class EventView(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
         
 
-    # TODO: Delete the event that they are the host of
+    # Delete events or remove user from event
     def delete(self, request, user_id, event_id):
         try:
             # Check if event exists
@@ -83,14 +83,17 @@ class EventView(APIView):
         # Check if user is host of event
         print(user_id)
         print(event.host.id)
-        user_is_host = event.host.id == user_id
+        user_is_host = event.host.pk == user_id
 
         if user_is_host:
             # Delete event if user is the host
             event.delete()
         else :
-         # Remove invitee from event if they are not the host
-            print("TODO: ")
-      
+            # Remove invitee from event if they are not the host
+            invitee_was_invited = EventsInvitees.objects.filter(event__pk=event_id, invitee__pk=user_id).exists()
+
+            # Remove user from event if they were invited
+            if invitee_was_invited:
+                EventsInvitees.objects.filter(event__pk=event_id, invitee__pk=user_id).delete()
 
         return Response(status=status.HTTP_200_OK)
