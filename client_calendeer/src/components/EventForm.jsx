@@ -12,7 +12,7 @@ import { useDeleteEvent } from "../hooks/useDeleteEvent";
 /**
  * Form for creating, reading, updating, and deleting events
  */
-function EventForm({ event = {} }) {
+function EventForm({ event = {}, onCloseModal }) {
   const { user: currentUser } = useAuth();
 
   const [invitees, setInvitees] = useState(event?.invitees || []);
@@ -55,8 +55,18 @@ function EventForm({ event = {} }) {
     // If no changes to event data, no need to submit form
     if (eventData === defaultValues) return;
 
-    const eventDataPlus = { ...eventData, invitees: invitees };
-    createUpdateEvent({ eventData: eventDataPlus, user_id: currentUser.id });
+    createUpdateEvent(
+      {
+        eventData: { ...eventData, invitees: invitees },
+        user_id: currentUser.id,
+      },
+      {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      },
+    );
   }
 
   function handleDelete(e) {
@@ -112,8 +122,6 @@ function EventForm({ event = {} }) {
               required: "This field is required.",
               validate: (date_str) => {
                 const now = new Date().toISOString();
-                console.log(date_str);
-                console.log(now);
                 return date_str < now || "Start time should be in the future";
               },
             })}
