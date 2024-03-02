@@ -21,7 +21,7 @@ class EventView(APIView):
         return Response(serializer.data)
 
     # Update event that the user is a host of
-    def put(self, request):
+    def put(self, request, user_id):
         if request.data:
             print('request.data: ', request.data)
             event_id = request.data.get('id')
@@ -32,7 +32,6 @@ class EventView(APIView):
             try:
                 event = Event.objects.get(pk=event_id)
                 serializer = EventSerializer(instance=event, data=request.data)
-                print('up')
                 if serializer.is_valid():
                     # Get list of invitees for this event in DB
                     current_invitees_list = list(event.get_invitees())
@@ -49,26 +48,18 @@ class EventView(APIView):
 
                     if len(invitees_to_remove):
                         helper.remove_invitees(invitees_to_remove, event_id)
-                            
-                    # print(serializer.data)
-                    # print(serializer.errors)
-                    # print(serializer.validated_data)
-                        
+
                     serializer.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 
             # Create new event
             except Event.DoesNotExist:
-                print('new')
                 del request.data['id']
                 print('request.data: ', request.data)
                 
                 serializer = EventSerializer(data=request.data)
 
                 if serializer.is_valid():
-                    # print(serializer.data)
-                    # print(serializer.errors)
-                    # print(serializer.validated_data)
 
                     # Add invitees to new event
                     new_event = serializer.save()
@@ -82,3 +73,24 @@ class EventView(APIView):
         
 
     # TODO: Delete the event that they are the host of
+    def delete(self, request, user_id, event_id):
+        try:
+            # Check if event exists
+            event = Event.objects.get(pk=event_id)
+        except Event.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if user is host of event
+        print(user_id)
+        print(event.host.id)
+        user_is_host = event.host.id == user_id
+
+        if user_is_host:
+            # Delete event if user is the host
+            event.delete()
+        else :
+         # Remove invitee from event if they are not the host
+            print("TODO: ")
+      
+
+        return Response(status=status.HTTP_200_OK)

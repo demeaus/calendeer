@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Event(models.Model):
     eventName = models.CharField(max_length=120)
     description = models.TextField(blank=True)
-    host = models.ForeignKey(User, on_delete=models.DO_NOTHING) 
+    host = models.ForeignKey(User, on_delete=models.CASCADE) 
     datetime_start = models.DateTimeField()
     datetime_end = models.DateTimeField()
 
@@ -17,8 +17,8 @@ class Event(models.Model):
     
 
 class EventsInvitees(models.Model):
-    invitee = models.ForeignKey(User, on_delete=models.DO_NOTHING) 
-    event = models.ForeignKey(Event, on_delete=models.DO_NOTHING)
+    invitee = models.ForeignKey(User, on_delete=models.CASCADE) 
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 
 # Custom User methods
