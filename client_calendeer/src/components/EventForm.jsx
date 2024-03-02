@@ -8,8 +8,6 @@ import { useCreateUpdateEvent } from "../hooks/useCreateUpdateEvent";
 import { useAuth } from "../context/AuthContext";
 import { useDeleteEvent } from "../hooks/useDeleteEvent";
 
-// NOTE: hidden inputs are hidden using css instead of input type due to react-hook-form bug
-
 // TODO: Handle the datetime inputs displaying in UTC
 /**
  * Form for creating, reading, updating, and deleting events
@@ -78,9 +76,11 @@ function EventForm({ event = {} }) {
           <input
             id="eventName"
             type="text"
-            {...register("eventName")}
+            {...register("eventName", {
+              required: "This field is required.",
+            })}
             className="input"
-            disabled={!canEdit}
+            readOnly={!canEdit}
           />
         </FormRow>
         <FormRow label="Description" error={errors?.description?.message}>
@@ -89,7 +89,7 @@ function EventForm({ event = {} }) {
             type="text"
             {...register("description")}
             className="input"
-            disabled={!canEdit}
+            readOnly={!canEdit}
           />
         </FormRow>
         {/* TODO: Fix host_email not being sent when creating a new event*/}
@@ -97,7 +97,7 @@ function EventForm({ event = {} }) {
           <input
             id="host_email"
             type="email"
-            disabled={true}
+            readOnly={true}
             value={event.host_email || currentUser.email}
             {...register("host_email")}
             className="input"
@@ -108,28 +108,37 @@ function EventForm({ event = {} }) {
           <input
             id="datetime_start"
             type="datetime-local"
-            {...register("datetime_start")}
+            {...register("datetime_start", {
+              required: "This field is required.",
+              validate: (date) => {
+                const now = new Date();
+                return date < now || "Start time should be in the future";
+              },
+            })}
             className="input"
-            disabled={!canEdit}
+            readOnly={!canEdit}
           />
         </FormRow>
         <FormRow label="End" error={errors?.datetime_end?.message}>
           <input
             id="datetime_end"
             type="datetime-local"
-            {...register("datetime_end")}
+            {...register("datetime_end", {
+              required: "This field is required.",
+              validate: (date) => {
+                return (
+                  date >= getValues().datetime_start ||
+                  "End time should be at or after the start time"
+                );
+              },
+            })}
             className="input"
-            disabled={!canEdit}
+            readOnly={!canEdit}
           />
         </FormRow>
+        <input type="hidden" value={currentUser.id} {...register("host")} />
         <input
-          className="hidden"
-          type="number"
-          value={currentUser.id}
-          {...register("host")}
-        />
-        <input
-          className="hidden"
+          type="hidden"
           value={eventExists ? event.id : -1}
           {...register("id")}
         />

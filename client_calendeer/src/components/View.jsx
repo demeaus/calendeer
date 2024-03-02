@@ -1,4 +1,5 @@
 import { useEvents } from "../hooks/useEvents";
+import Divider from "../ui/Divider";
 import Event from "./Event";
 
 /**
@@ -19,6 +20,7 @@ function View() {
 
   return (
     <div className="w-100% flex h-screen flex-col p-2 ">
+      <Divider date={new Date().toTimeString()} />
       {events &&
         events
           .sort(sortByDate)
