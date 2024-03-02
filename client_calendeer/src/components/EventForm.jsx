@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormRow } from "../ui/FormRow";
-import Form from "../ui/Form";
-import { useState } from "react";
-import CreateInviteesList from "./CreateInviteesList";
-import Button from "../ui/Button";
+
 import { useCreateUpdateEvent } from "../hooks/useCreateUpdateEvent";
-import { useAuth } from "../context/AuthContext";
 import { useDeleteEvent } from "../hooks/useDeleteEvent";
+import { useAuth } from "../context/AuthContext";
+import Form from "../ui/Form";
+import Button from "../ui/Button";
+import CreateInviteesList from "./CreateInviteesList";
 
 // TODO: Handle the datetime inputs displaying in UTC
 /**
@@ -14,8 +15,8 @@ import { useDeleteEvent } from "../hooks/useDeleteEvent";
  */
 function EventForm({ event = {}, onCloseModal }) {
   const { user: currentUser } = useAuth();
-
   const [invitees, setInvitees] = useState(event?.invitees || []);
+
   let defaultValues = {};
   let canEdit = false;
   let eventExists = false;
@@ -69,16 +70,23 @@ function EventForm({ event = {}, onCloseModal }) {
     );
   }
 
-  function handleDelete(e) {
-    e.preventDefault();
+  function onDelete(eventData) {
+    if (!eventData.id) return;
 
-    if (!event.id) return;
-    deleteEvent({ event_id: event.id, user_id: currentUser.id });
+    deleteEvent(
+      { event_id: eventData.id, user_id: currentUser.id },
+      {
+        onSuccess: () => {
+          console.log("here");
+          onCloseModal?.();
+        },
+      },
+    );
   }
 
   return (
     <div>
-      <Form id="event-form" onSubmit={handleSubmit(onSubmit)}>
+      <Form id="event-form">
         <h1 className="text-center text-lg font-bold">
           {eventExists ? (canEdit ? "Edit " : "View ") : "Add "}Event
         </h1>
@@ -160,12 +168,20 @@ function EventForm({ event = {}, onCloseModal }) {
 
       <div className="flex justify-between">
         {canEdit && (
-          <Button form="event-form" type="primary">
+          <Button
+            form="event-form"
+            onClick={handleSubmit(onSubmit)}
+            type="primary"
+          >
             Save
           </Button>
         )}
         {eventExists && (
-          <Button onClick={handleDelete} type="secondary">
+          <Button
+            form="event-form"
+            onClick={handleSubmit(onDelete)}
+            type="secondary"
+          >
             Delete
           </Button>
         )}

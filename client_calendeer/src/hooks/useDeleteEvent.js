@@ -5,6 +5,7 @@ import { deleteEvent as deleteEventApi } from "../services/apiEvents";
 //  TODO: Fix no refresh onSuccess
 export function useDeleteEvent() {
     const queryClient = useQueryClient();
+
     const { isLoading: isDeleting, mutate: deleteEvent } = useMutation({
         mutationFn: ({ event_id, user_id }) => deleteEventApi(event_id, user_id),
         onSuccess: () => {
