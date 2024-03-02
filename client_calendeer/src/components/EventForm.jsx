@@ -110,9 +110,11 @@ function EventForm({ event = {} }) {
             type="datetime-local"
             {...register("datetime_start", {
               required: "This field is required.",
-              validate: (date) => {
-                const now = new Date();
-                return date < now || "Start time should be in the future";
+              validate: (date_str) => {
+                const now = new Date().toISOString();
+                console.log(date_str);
+                console.log(now);
+                return date_str < now || "Start time should be in the future";
               },
             })}
             className="input"
