@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Main from "./ui/Main";
 import AddEvent from "./components/AddEvent";
-import Day from "./components/Day";
+import View from "./components/View";
 import Footer from "./ui/Footer";
 import Header from "./ui/Header";
 import { AuthProvider } from "./context/AuthContext";
@@ -21,7 +21,7 @@ function App() {
       <AuthProvider>
         <Header />
         <Main>
-          <Day />
+          <View />
           <AddEvent />
         </Main>
         <Footer />

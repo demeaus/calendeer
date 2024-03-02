@@ -11,6 +11,9 @@ import { useDeleteEvent } from "../hooks/useDeleteEvent";
 // NOTE: hidden inputs are hidden using css instead of input type due to react-hook-form bug
 
 // TODO: Handle the datetime inputs displaying in UTC
+/**
+ * Form for creating, reading, updating, and deleting events
+ */
 function EventForm({ event = {} }) {
   const { user: currentUser } = useAuth();
 

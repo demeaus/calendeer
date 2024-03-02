@@ -4,7 +4,7 @@ import Chip from "../ui/Chip";
 import { FormRow } from "../ui/FormRow";
 
 /**
- * Allows user to invite others to their event by adding emails
+ * Component to allow user to invite others to their event by adding emails
  */
 // TODO: Refactor into seperate Form and List
 function CreateInviteesList({ invitees, setInvitees }) {
@@ -26,7 +26,10 @@ function CreateInviteesList({ invitees, setInvitees }) {
   return (
     <div>
       {/* Field for user to add invitees by email address */}
-      <form onSubmit={handleInvite} className="flex justify-center gap-2">
+      <form
+        onSubmit={handleInvite}
+        className="flex items-center justify-center gap-2"
+      >
         <FormRow label="Invitees">
           <input
             id="invitee"

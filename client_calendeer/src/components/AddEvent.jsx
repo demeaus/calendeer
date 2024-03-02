@@ -3,6 +3,9 @@ import EventForm from "./EventForm";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 
+/**
+ * Component modal to add an event
+ */
 function AddEvent() {
   return (
     <div className="fixed bottom-5 right-5">

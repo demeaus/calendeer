@@ -1,6 +1,10 @@
 import { formatDate } from "../utils/helpers";
 import EditEvent from "./EditEvent";
 
+/**
+ * Component represents an event
+ */
+// TODO: Provide user option to view event details as read-only
 function Event({ event }) {
   const {
     eventName,
@@ -22,11 +26,6 @@ function Event({ event }) {
         {start_time} to {end_time}
       </h2>
       <h2>{start_date}</h2>
-      {/* TODO: Remove details */}
-      <div>
-        <p>{host}</p>
-        <p>{invitees}</p>
-      </div>
       <EditEvent event={event} />
     </div>
   );

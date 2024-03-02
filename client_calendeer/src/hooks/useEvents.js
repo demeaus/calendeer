@@ -6,6 +6,10 @@ import { getEvents } from "../services/apiEvents";
 export function useEvents() {
     const { user: currentUser } = useAuth();
 
-    const { isLoading, data: events, error } = useQuery({ queryKey: ["events"], queryFn: () => getEvents(currentUser.id) });
+    const { isLoading, data: events, error } = useQuery({
+        queryFn: () => getEvents(currentUser.id),
+        queryKey: ["events"],
+    });
+
     return { isLoading, events, error }
 }

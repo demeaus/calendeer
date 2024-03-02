@@ -1,8 +1,7 @@
 import { createContext, useContext } from "react";
 
 /**
- * Make user information global
- * Setting up authentication with the Context API allows scaling to include authentication and authorization
+ * Context makes user information global
  */
 
 const TEMP_USER = {

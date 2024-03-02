@@ -1,7 +1,7 @@
 import { API_URL } from "../utils/constants";
 
 /**
- * Retrieves events for a user from API
+ * Retrieves events for a user
  */
 export async function getEvents(user_id) {
     // Fetches list of events based on the currently authenticated user ID
