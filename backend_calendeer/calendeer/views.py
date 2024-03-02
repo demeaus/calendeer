@@ -28,6 +28,7 @@ class EventView(APIView):
 
             # TODO: Fix serializer incompatibility with invitee list
             # TODO: Refactor to optimize querysets
+            # Update event
             try:
                 event = Event.objects.get(pk=event_id)
                 serializer = EventSerializer(instance=event, data=request.data)
@@ -42,6 +43,7 @@ class EventView(APIView):
                     print(update_invitees_list)
                     invitees_to_add, invitees_to_remove = helper.compare_lists(current_invitees_list, update_invitees_list)
 
+                    # Update list of invitees for event
                     if len(invitees_to_add):
                         helper.add_invitees(invitees_to_add, event_id)
 
@@ -50,21 +52,30 @@ class EventView(APIView):
                             
                     # print(serializer.data)
                     # print(serializer.errors)
-                    # print("validated up: ", serializer.validated_data)
+                    # print(serializer.validated_data)
+                        
                     serializer.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 
+            # Create new event
             except Event.DoesNotExist:
                 print('new')
                 del request.data['id']
                 print('request.data: ', request.data)
-                event_id = request.data.get('id')
+                
                 serializer = EventSerializer(data=request.data)
+
                 if serializer.is_valid():
                     # print(serializer.data)
-                    print(serializer.errors)
-                    # print("validated new: ", serializer.validated_data)
-                    serializer.save()
+                    # print(serializer.errors)
+                    # print(serializer.validated_data)
+
+                    # Add invitees to new event
+                    new_event = serializer.save()
+                    invitees_to_add = request.data.get('invitees')
+                    if len(invitees_to_add):
+                        helper.add_invitees(invitees_to_add, new_event.pk)
+
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
         return Response(status=status.HTTP_400_BAD_REQUEST)
