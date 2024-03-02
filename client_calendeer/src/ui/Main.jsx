@@ -1,3 +1,6 @@
+/**
+ * Component to format body of application
+ */
 function Main({ children }) {
   return (
     <div className="flex min-h-screen justify-center bg-stone-200">

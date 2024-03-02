@@ -1,3 +1,6 @@
+/**
+ * Component for brand logo and title
+ */
 function Logo() {
   return (
     <div className="flex items-center gap-3  md:gap-5">

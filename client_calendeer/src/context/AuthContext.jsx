@@ -4,6 +4,7 @@ import { createContext, useContext } from "react";
  * Context makes user information global
  */
 
+// TODO: Allow users to authenticate
 const TEMP_USER = {
   id: 2,
   email: "deerdra@g.com",

@@ -1,7 +1,5 @@
 /**
- * 
- * @param Date string
- * @returns Object of formatted date and time strings
+ * Splits a Date object into formatted date and time
  */
 export function formatDate(date) {
     const formattedDate = new Intl.DateTimeFormat("en", {

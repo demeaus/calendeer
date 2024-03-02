@@ -10,7 +10,11 @@ function Header() {
       <div className="my-2 flex items-center justify-between gap-2 md:gap-12">
         <div className="flex items-center justify-between gap-2">
           <Button>All Events</Button>
-          <Button>24-hour</Button>
+          <Button
+            onClick={console.log("TODO: Filter for events in the next 24 hrs")}
+          >
+            24-hour
+          </Button>
         </div>
         <div className="flex items-center justify-between gap-4 text-sm md:text-base">
           <h2 className="hidden md:inline">Hello, {user.email}</h2>

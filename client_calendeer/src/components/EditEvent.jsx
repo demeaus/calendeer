@@ -2,12 +2,15 @@ import { HiPencil } from "react-icons/hi";
 import Modal from "../ui/Modal";
 import EventForm from "./EventForm";
 
+/**
+ * Component to open and close modal with form to edit event
+ */
 function EditEvent({ event }) {
   return (
     <div>
       <Modal>
         <Modal.Open opens="event-form">
-          <button className="absolute right-3 top-3 md:relative md:right-0 md:top-0 md:items-center">
+          <button className="absolute right-5 top-5">
             <HiPencil />
           </button>
         </Modal.Open>

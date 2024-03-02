@@ -3,6 +3,11 @@ import { HiX } from "react-icons/hi";
 import { createPortal } from "react-dom";
 import useOutsideClick from "../hooks/useOutsideClick";
 
+/**
+ * Compound Modal component is a modal that can be populated with different components
+ *  and be opened by different components, but provides standard modal behavior
+ */
+
 const ModalContext = createContext();
 
 function Modal({ children }) {

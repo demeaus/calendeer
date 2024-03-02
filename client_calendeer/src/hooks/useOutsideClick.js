@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-// listenCapturing specifies the bubbling phase of the event to use in the EventListener
+// Hook to listen for a click outside of an area in the DOM
 export default function useOutsideClick(action, listenCapturing = true) {
   // Represents the ex. modal as DOM element
   const ref = useRef();

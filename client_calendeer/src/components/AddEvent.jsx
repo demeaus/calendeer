@@ -4,7 +4,7 @@ import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 
 /**
- * Component modal to add an event
+ * Component to open and close modal with form to add event
  */
 function AddEvent() {
   return (
