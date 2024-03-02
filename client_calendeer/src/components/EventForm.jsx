@@ -9,7 +9,6 @@ import Form from "../ui/Form";
 import Button from "../ui/Button";
 import CreateInviteesList from "./CreateInviteesList";
 
-// TODO: Handle the datetime inputs displaying in UTC
 /**
  * Form for creating, reading, updating, and deleting events
  */
@@ -33,8 +32,8 @@ function EventForm({ event = {}, onCloseModal }) {
 
   if (eventExists) {
     // Formats datetime string into format datetime-locale can read as a default value
-    const datetime_start_str = event.datetime_start.slice(0, -4);
-    const datetime_end_str = event.datetime_end.slice(0, -4);
+    const datetime_start_str = event.datetime_start.slice(0, -3);
+    const datetime_end_str = event.datetime_end.slice(0, -3);
 
     // Set and format existing event data to populate form with default values
     defaultValues = {
@@ -110,8 +109,7 @@ function EventForm({ event = {}, onCloseModal }) {
             readOnly={!canEdit}
           />
         </FormRow>
-        {/* TODO: Fix host_email not being sent when creating a new event*/}
-        <FormRow label="Host Email" error={errors?.host_email?.message}>
+        <FormRow label="Host Email">
           <input
             id="host_email"
             type="email"
@@ -121,7 +119,6 @@ function EventForm({ event = {}, onCloseModal }) {
             className="input"
           />
         </FormRow>
-        {/* TODO: Validate datetimes: end is after start */}
         <FormRow label="Start" error={errors?.datetime_start?.message}>
           <input
             id="datetime_start"
@@ -129,8 +126,9 @@ function EventForm({ event = {}, onCloseModal }) {
             {...register("datetime_start", {
               required: "This field is required.",
               validate: (date_str) => {
-                const now = new Date().toISOString();
-                return date_str < now || "Start time should be in the future";
+                const now = new Date();
+                const date = new Date(date_str);
+                return date > now || "Start time should be in the future";
               },
             })}
             className="input"

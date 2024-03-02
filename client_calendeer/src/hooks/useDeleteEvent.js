@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteEvent as deleteEventApi } from "../services/apiEvents";
 
 // Deletes events or removes a User from them
-//  TODO: Fix no refresh onSuccess
 export function useDeleteEvent() {
     const queryClient = useQueryClient();
 
