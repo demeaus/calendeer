@@ -14,7 +14,9 @@ import ChipList from "./ChipList";
  * Form for creating, reading, updating, and deleting events
  */
 function EventForm({ event = {}, onCloseModal }) {
+  // Get logged in user
   const { user: currentUser } = useAuth();
+
   const [invitees, setInvitees] = useState(event?.invitees || []);
 
   let defaultValues = {};
@@ -47,11 +49,15 @@ function EventForm({ event = {}, onCloseModal }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: defaultValues,
   });
+
+  // Get form validation errors
   const { errors } = formState;
 
+  // Access API calls to create, update, and delete events
   const { isLoading, createUpdateEvent, error } = useCreateUpdateEvent();
   const { isDeleting, deleteEvent } = useDeleteEvent();
 
+  // Handle saving of event
   function onSubmit(eventData) {
     // If no changes to event data, no need to submit form
     if (eventData === defaultValues) return;
@@ -70,6 +76,7 @@ function EventForm({ event = {}, onCloseModal }) {
     );
   }
 
+  // Handle deletion of event
   function onDelete(eventData) {
     if (!eventData.id) return;
 
@@ -77,7 +84,6 @@ function EventForm({ event = {}, onCloseModal }) {
       { event_id: eventData.id, user_id: currentUser.id },
       {
         onSuccess: () => {
-          console.log("here");
           onCloseModal?.();
         },
       },
@@ -90,6 +96,7 @@ function EventForm({ event = {}, onCloseModal }) {
         <h1 className="text-center text-lg font-bold">
           {eventExists ? (canEdit ? "Edit " : "View ") : "Add "}Event
         </h1>
+
         <FormRow label="Event Name" error={errors?.eventName?.message}>
           <input
             id="eventName"
@@ -114,10 +121,10 @@ function EventForm({ event = {}, onCloseModal }) {
           <input
             id="host_email"
             type="email"
-            readOnly={true}
             value={event.host_email || currentUser.email}
             {...register("host_email")}
             className="input"
+            readOnly={true}
           />
         </FormRow>
         <FormRow label="Start" error={errors?.datetime_start?.message}>
@@ -160,6 +167,8 @@ function EventForm({ event = {}, onCloseModal }) {
           {...register("id")}
         />
       </Form>
+
+      {/* Components for managing and displaying event invitees */}
       {canEdit && (
         <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
       )}
@@ -169,6 +178,7 @@ function EventForm({ event = {}, onCloseModal }) {
         canEdit={canEdit}
       />
 
+      {/* Buttons for saving or deleting events */}
       <div className="flex justify-between">
         {canEdit && (
           <Button
