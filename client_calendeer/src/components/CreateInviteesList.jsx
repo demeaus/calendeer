@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import Chip from "../ui/Chip";
 import { FormRow } from "../ui/FormRow";
+import ChipList from "./ChipList";
 
 /**
  * Component to allow user to invite others to their event by adding emails
@@ -17,12 +18,6 @@ function CreateInviteesList({ invitees, setInvitees }) {
     setInvitees((invitees) => [...invitees, newInvitee]);
     setNewInvitee("");
   }
-
-  // Delete invitee from invitee list when representative chip is clicked
-  function handleChipClick(id) {
-    setInvitees((invitees) => invitees.filter((invitee) => invitee !== id));
-  }
-
   return (
     <div>
       {/* Field for user to add invitees by email address */}
@@ -44,15 +39,6 @@ function CreateInviteesList({ invitees, setInvitees }) {
         </FormRow>
         <Button type="small">Invite</Button>
       </form>
-      {/* TODO: wrap email addresses */}
-      <div className="my-2 flex items-center justify-between">
-        {/* List of current invitees as chips */}
-        <div className="flex justify-end gap-1">
-          {invitees.map((invitee) => (
-            <Chip key={invitee} email={invitee} onClick={handleChipClick} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

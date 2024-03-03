@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import Form from "../ui/Form";
 import Button from "../ui/Button";
 import CreateInviteesList from "./CreateInviteesList";
+import ChipList from "./ChipList";
 
 /**
  * Form for creating, reading, updating, and deleting events
@@ -159,10 +160,14 @@ function EventForm({ event = {}, onCloseModal }) {
           {...register("id")}
         />
       </Form>
-      {/* TODO: separate form from list */}
       {canEdit && (
         <CreateInviteesList invitees={invitees} setInvitees={setInvitees} />
       )}
+      <ChipList
+        invitees={invitees}
+        setInvitees={setInvitees}
+        canEdit={canEdit}
+      />
 
       <div className="flex justify-between">
         {canEdit && (
