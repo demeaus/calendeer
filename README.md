@@ -26,6 +26,8 @@ Install python libraries and packages:
 
 `pip install -r requirements.txt`
 
+Set-up database:
+`python manage.py migrate`
 
 ## Run
 
