@@ -19,6 +19,7 @@ The backend directory is located in `backend_calendeer/`.
 Create and activate a virtual environment:
 
 `python -m venv .venv`
+
 `source .venv/bin/activate`
 
 Install python libraries and packages:
