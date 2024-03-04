@@ -27,7 +27,11 @@ Install python libraries and packages:
 `pip install -r requirements.txt`
 
 Set-up database:
+
 `python manage.py migrate`
+
+Initialize a user:
+`python manage.py loaddata calendeer/initialData.json`
 
 ## Run
 

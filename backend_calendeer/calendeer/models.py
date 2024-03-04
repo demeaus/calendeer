@@ -20,7 +20,6 @@ class EventsInvitees(models.Model):
     invitee = models.ForeignKey(User, on_delete=models.CASCADE) 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-
 # Custom User methods
 def get_user_email(self):
     return self.email

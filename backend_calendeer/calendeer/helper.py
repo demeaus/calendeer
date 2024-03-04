@@ -47,7 +47,3 @@ def remove_invitees(invitees, event_id):
         # Remove user from event if they were invited
         if invitee_was_invited:
             EventsInvitees.objects.filter(event__pk=event_id, invitee__email=invitee).delete()
-
-# Initialize a user
-if len(User.objects.all()) == 0:
-    create_new_user("deerdra@g.com")

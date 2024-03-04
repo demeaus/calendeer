@@ -3,12 +3,6 @@ from django.contrib.auth.models import User
 
 from .models import Event, EventsInvitees
 
-class CurrentUserSerializer(serializers.Serializer):
-    class Meta:
-        model = User
-        fields = ('id', 'email')
-
-
 class EventSerializer(serializers.ModelSerializer):
     # TODO: Refactor to combine host id and host email into one object
     host_email = serializers.SerializerMethodField('get_host_email')
