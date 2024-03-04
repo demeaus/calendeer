@@ -26,6 +26,7 @@ function EventForm({ event = {}, onCloseModal }) {
   // Identify if form is being used to edit an existing event or create a new one
   if (event.eventName) {
     eventExists = true;
+    console.log(event);
   }
 
   // Identify user's permissions for the editing or adding an event
@@ -35,8 +36,8 @@ function EventForm({ event = {}, onCloseModal }) {
 
   if (eventExists) {
     // Formats datetime string into format datetime-locale can read as a default value
-    const datetime_start_str = event.datetime_start.slice(0, -3);
-    const datetime_end_str = event.datetime_end.slice(0, -3);
+    const datetime_start_str = event.datetime_start.slice(0, 16);
+    const datetime_end_str = event.datetime_end.slice(0, 16);
 
     // Set and format existing event data to populate form with default values
     defaultValues = {
@@ -133,11 +134,11 @@ function EventForm({ event = {}, onCloseModal }) {
             type="datetime-local"
             {...register("datetime_start", {
               required: "This field is required.",
-              validate: (date_str) => {
-                const now = new Date();
-                const date = new Date(date_str);
-                return date > now || "Start time should be in the future";
-              },
+              // validate: (date_str) => {
+              //   const now = new Date();
+              //   const date = new Date(date_str);
+              //   return date > now || "Start time should be in the future";
+              // },
             })}
             className="input"
             readOnly={!canEdit}

@@ -16,6 +16,7 @@ function Event({ event }) {
     <div className="relative h-fit rounded-md border-2 bg-blue-700 px-6 pb-4 pt-3 text-stone-100">
       <h1 className="mb-2 text-lg">{eventName}</h1>
       <h2 className="text-base">{start_date}</h2>
+      {/* TODO: Handle events spanning multiple days */}
       <h2 className="text-sm">
         {start_time} to {end_time}
       </h2>

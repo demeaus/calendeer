@@ -9,14 +9,15 @@ NOTIFICATION_TIME = 30 # minutes
 NOTIFICATION_DELTA = 1 # minutes
 EXPIRATION_TIME = 24 # hours
 
-def notify(event_name, start, recipients):
+def notify(event, recipients):
     now = now_minus = datetime.datetime.now()
     print('========================')
     print(f"Sent at {now} ")
     print("Email notification: ")
     print("To: ", recipients)
-    print( f'Message: {event_name} at {start} begins in {NOTIFICATION_TIME} minutes.')
+    print( f'Message: {event.eventName} at {event.datetime_start} begins in {NOTIFICATION_TIME} minutes.')
 
+    # TODO: Authenticate with Google
     # send_mail(
     #     "Subject",
     #     f'{event_name} begins in {NOTIFICATION_TIME} minutes.',
@@ -39,32 +40,28 @@ def get_approaching_events():
 
     # TODO: Refactor gathering event data
     # Get invitees and hosts to notify for each event
-    notifications = {}
+
+    # For each event, combine emails for host and invitees, get event data
+    users_to_invite = {}
     for event in events:
-        notifications[event.id] = {}
-        notifications[event.id]['name'] = event.eventName
-        notifications[event.id]['start'] = event.datetime_start
+        users_to_invite[event.id] = []
         host_email = event.host.email
         invitee_ids = EventsInvitees.objects.filter(event=event).values('invitee_id')
         invitee_emails = User.objects.filter(pk__in=invitee_ids).values_list('email', flat=True)
 
         # TODO: Prevent host from being invitee too
-        notifications[event.id]['users'] = [host_email]
+        users_to_invite[event.id] = [host_email]
 
         if len(invitee_emails):
             for email in invitee_emails:
-                if email not in notifications[event.id]['users']:
-                    notifications[event.id]['users'].append(email)
+                if email not in users_to_invite[event.id]:
+                    users_to_invite[event.id].append(email)
 
-    print("notifications", notifications)
+    print("users_to_invite", users_to_invite)
 
     # Send notification to each invitee/host for each event
-    for event in notifications:
-        print('notifying', event)
-        event_name = notifications[event]['name']
-        start = notifications[event]['start']
-        emails = notifications[event]['users']
-        notify(event_name, start, emails)
+    for event in events:
+        notify(event, users_to_invite[event.id])
 
     # TODO: Move to seperate cron job
     # Delete events that are more than x hours since they ended
