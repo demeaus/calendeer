@@ -6,7 +6,7 @@ import { createContext, useContext } from "react";
 
 // TODO: Allow users to authenticate
 const TEMP_USER = {
-  id: 2,
+  id: 1,
   email: "deerdra@g.com",
 };
 
